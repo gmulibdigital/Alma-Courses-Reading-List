@@ -8,6 +8,7 @@ from json import JSONDecodeError
 
 BASE_URL = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/courses'
 
+
 #API_KEY = {} need to fill it from api_key.ini
 
 os.environ['DJANGO_SECRET_KEY'] = 'pds)t&(axu+xvhy@7ncd@zggr=7k2&nu^$m^(mv0au=)v2=0)m'
@@ -82,6 +83,10 @@ def getCitationDataFromCourseId(id):
     if 'reading_list' in course['reading_lists']:
         for i in course['reading_lists']['reading_list']:
             if 'citation' in  i['citations']:
+                a =  i['citations']['citation']
+                for x in a :
+                    t = x['metadata']['title']
+                    x['metadata']['title'] = t.replace('/', '')
                 c['citations'] += i['citations']['citation']
     course['citations'] = c['citations']
     return course
