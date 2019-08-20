@@ -25,7 +25,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('', include('courses.urls')),
+    path('courses/', include('courses.urls')),
 ]
 
 print("static file patten = " , staticfiles_urlpatterns() )
