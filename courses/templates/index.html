@@ -9,21 +9,40 @@
           "displayStart": 0,
           "lengthMenu": [ 10 ,25, 50, 100 ]
       } );
-    } );
+
+    // $( '<button id="reset" class="btn ">Reset</button>' ).insertBefore( ".dataTables_filter" );
+    $(".dataTables_filter").append("&nbsp;");
+    $( ".dataTables_filter" ).append( '<button id="reset" class="btn btn-primary">Reset</button>');
+   
+    $(document).on("click", "button.btn" , function() {
+          var table = $('#coursetable').DataTable();
+          table.search('').draw();
+        });
+ 
+  } );
+
+  
+
+  function filterConent(content){ 
+    var table = $('#coursetable').DataTable();
+    table.search( content ).draw();
+  }
+ 
+
+
   </script>
 
 
 <div class="inside-article">
 		
     <header class="entry-header">
-      <h1 class="entry-title" itemprop="headline">Course Reading List Citations – Fall 2019</h1>
+      <h1 class="entry-title" itemprop="headline">Course Related Book List – Fall 2019</h1>
     </header>
 
   
 <div class="entry-content" itemprop="text">
-    <p>These textbooks are on reserve at the Information Desk of Fenwick Library, or at the Arlington Campus or SciTech Campus libraries (check the “Campus” column below).</p>
+    <p>These books are part of a course(s) which are available Fenwick Library, or at the Arlington Campus or SciTech Campus libraries (check the “Campus” column below).</p>
 <ul>
-<li>Students may borrow these textbooks for a 2-hour loan period</li>
 
 </ul>
 <p>To see other ways in which University Libraries supports affordable education, visit our <a href="https://oer.gmu.edu">Open Educational Resources (OER) site</a></p>
@@ -33,7 +52,8 @@
 <div id="example_wrapper" class="dataTables_wrapper">
     
     <table id="coursetable" class="display dataTable" style="width: 100%;" role="grid" aria-describedby="example_info">
-    <thead>
+      <!-- <button id="reset" class="btn btn-primary">Reset</button> -->
+      <thead>
       <tr role="row"><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Campus: activate to sort column ascending" style="width: 30px;">Campus</th>
         <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Code: activate to sort column ascending" style="width: 20px;">Code</th>
         <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 150px;">Course Name</th>
@@ -47,12 +67,12 @@
         {% for course in obj %}
             {% for book in course.citations %}
                 <tr>
-                    <td>{{course.address}}</td>
-                    <td>{{ course.code }}</td>
-                    <td>{{ course.name }}</td>
-                    <td>{{ course.section }}</td>
-                    <td>{{course.teacher}}</td>
-                    <td>{{ book.metadata.title}}</td>
+                    <td><a href="#" id="code" onclick='filterConent("{{ course.address }}");return false;'>{{course.address}}</a></td>
+                    <td ><a href="#" id="code" onclick='filterConent("{{ course.code }}");return false;'>{{ course.code }}</a></td>
+                    <td><a href="#" id="code" onclick='filterConent("{{ course.name }}");return false;'>{{ course.name }}</a></td>
+                    <td><a href="#" id="code" onclick='filterConent("{{ course.section}}");return false;'>{{ course.section }}</a></td>
+                    <td><a href="#" id="code" onclick='filterConent("{{ course.teacher}}");return false;'>{{course.teacher}}</a></td>
+                    <td><a href="{{ book.metadata.primolink}}" target="_blank">{{ book.metadata.title}}</a></td>
                     <td>{{ book.metadata.call_number }}</td>
                 </tr>
             {% endfor %}
